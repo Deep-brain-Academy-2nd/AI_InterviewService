@@ -3,8 +3,9 @@ import { AppProps } from "next/app";
 import { ThemeProvider } from "../styles/styled-components";
 import GlobalStyle from "../styles/global-styles";
 import theme from "../styles/theme";
+import { SessionProvider } from "next-auth/react"
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: {session, ...pageProps} }: AppProps) {
   return (
     <>
       <Head>
@@ -12,11 +13,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
+        <SessionProvider session={session}>
+          <Component {...pageProps} />
+        </SessionProvider>
       </ThemeProvider>
     </>
-    
-  )  
+  )
 }
 
 export default MyApp
