@@ -1,0 +1,1 @@
+export const SETUSERNAME = "user/SERUSERNAME" as const;
