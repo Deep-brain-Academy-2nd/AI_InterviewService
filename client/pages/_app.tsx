@@ -1,5 +1,6 @@
-import "../styles/globals.css"
-import Head from 'next/head'
+import "../styles/globals.css";
+//import { useEffect } from "react";
+import Head from 'next/head';
 import App, { AppProps, AppContext } from "next/app";
 import Layout from "../components/layout";
 import { Provider } from "react-redux";
@@ -25,6 +26,15 @@ const configureStore = (): Store => {
 const store = configureStore()
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+
+  // useEffect(() => {
+  //   const jssStyles = document.querySelector('#jss-server-side'); 
+  //   if (jssStyles) { 
+  //     jssStyles.parentNode.removeChild(jssStyles); 
+  //   }
+
+  // }, [])
+
   return (
     <>
       <Head>
@@ -37,12 +47,6 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
       </Provider>
     </>
   )
-}
-
-MyApp.getInitialProps = async (appContext: AppContext) => {
-  const appProps = await App.getInitialProps(appContext);
-
-  return { ...appProps }
 }
 
 export default MyApp

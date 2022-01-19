@@ -5,7 +5,7 @@ import { useFormik, FormikHelpers } from 'formik';
 import * as yup from 'yup';
 import Router from "next/router"
 import { User } from "../types/user";
-import UserService from '../services/user-service';
+import { register } from '../services/user-service';
 
 const useStyles = makeStyles(theme => ({
     gridItem: {
@@ -56,8 +56,7 @@ const RegisterForm = () => {
                 if (values.password !== values.confirmPassword) {
                     alert("Please check your confirm password")
                 } else {
-                    const userService = new UserService();
-                    const result = await userService.register(values);
+                    const result = await register(values);
                     if (result === 'success') {
                         alert("Sign up was successful")
                         Router.push("/")

@@ -5,7 +5,7 @@ import { useFormik, FormikHelpers } from 'formik';
 import * as yup from 'yup';
 import Router from "next/router"
 import { User } from "../types/user";
-import UserService from '../services/user-service';
+import { login } from '../services/user-service';
 
 const useStyles = makeStyles(theme => ({
     gridItem: {
@@ -44,8 +44,7 @@ const LoginForm = () => {
             setTimeout(async () => {
 
                 // Login
-                const userService = new UserService();
-                const result = await userService.login(values.email, values.password);
+                const result = await login(values.email, values.password);
                 if (result.type === 'success') {
                     Router.push("/")
                 } else {

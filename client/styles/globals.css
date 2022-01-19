@@ -2,8 +2,7 @@ html,
 body {
   margin: 0;
   background-color: #A8F552;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Titillium Web', sans-serif;
 }
 
 a {

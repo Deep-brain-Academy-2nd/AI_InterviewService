@@ -3,7 +3,7 @@ import { AppBar, Box, Typography, Button, Grid, ButtonGroup } from '@material-ui
 import { makeStyles } from '@material-ui/styles'
 import Router from "next/router"
 import Link from "next/link"
-import AccountService from "../services/user-service";
+import { getProfile } from "../services/user-service";
 import { useDispatch, useSelector } from "react-redux";
 import { setUsername } from "../store/actions/user";
 import { RootState } from "../store/reducers";
@@ -44,8 +44,7 @@ const Layout = ({ children }: Props) => {
 
     // Get Username
     async function loadProfile() {
-        const accountService = new AccountService();
-        const result = await accountService.getProfile(); // Call API
+        const result = await getProfile(); // Call API
 
         if (result['name']) {
             dispatch(setUsername(result['name']));
