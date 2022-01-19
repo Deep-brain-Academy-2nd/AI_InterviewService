@@ -20,13 +20,11 @@ export default class AccountService {
                 }
             }
         ).catch(function (error) {
-            console.log(error);
           if (error.response) {
             return error.response;
           }
         });
         
-        console.log(res);
         return res.data;
     }
 
@@ -36,7 +34,6 @@ export default class AccountService {
             config.apiServer + '/account/register', 
             user
         ).catch(function (error) {
-            console.log(error);
           if (error.response) {
             return error.response;
           }
