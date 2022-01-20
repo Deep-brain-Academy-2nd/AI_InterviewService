@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 import { AppBar, Box, Typography, Button, Grid, ButtonGroup } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
 import Router from "next/router"
 import Link from "next/link"
 import { getProfile } from "../services/user-service";
@@ -12,18 +11,7 @@ type Props = {
     children: ReactNode
 }
 
-const useStyles = makeStyles(theme => ({
-    appBar: {
-        padding: "0 20%",
-        height: "100px",
-        display: "flex",
-        justifyContent: "center"
-    }
-}))
-
 const Layout = ({ children }: Props) => {
-
-    const classes = useStyles(); // Custom Style
 
     const dispatch = useDispatch();
     const username = useSelector((state: RootState) => state.user.username);
@@ -54,18 +42,18 @@ const Layout = ({ children }: Props) => {
     loadProfile(); // Load profile (username) 
 
     return (
-        <Box sx={{ display: 'flex' }}>
-            <AppBar className={classes.appBar}>
-                <Grid container justify='space-between' alignItems='center'>
-                    <Grid item md={1}>
-                        <Link href="/"><Typography style={{ cursor: "pointer" }}>LOGO</Typography></Link>
+        <Box>
+            <AppBar style={{padding: "0 20%", height: "100px", display: "flex", justifyContent: "center"}}>
+                <Grid container justifyContent='space-between' alignItems='center'>
+                    <Grid item md={2}>
+                        <Link href="/"><Typography style={{ cursor: "pointer", fontSize: "20px" }}>AI-INTERVIEW</Typography></Link>
                     </Grid>
                     <Grid item md={2}>
                         {
                             // 로그인전 버튼 - 회원가입, 로그인
                             // 로그인후 버튼 - 마이페이지, 로그아웃
                             username !== "" ?
-                                <Grid container justify='flex-end' alignItems='center' spacing={2}>
+                                <Grid container justifyContent='flex-end' alignItems='center' spacing={2}>
                                     <Grid item md={2}>
                                         <Typography>{username}</Typography>
                                     </Grid>
@@ -77,7 +65,7 @@ const Layout = ({ children }: Props) => {
                                     </Grid>
                                 </Grid>
                                 :
-                                <Grid container justify='flex-end' alignItems='center' spacing={2}>
+                                <Grid container justifyContent='flex-end' alignItems='center' spacing={2}>
                                     <Grid item md={2}>
                                         {/* Empty space */}
                                     </Grid>

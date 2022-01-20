@@ -1,33 +1,13 @@
 import { Box, Paper, Typography, Button, Grid } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
 import Router from "next/router"
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100vw',
-    height: '100vh'
-  },
-  // titleFont: {
-  //   color: "white", fontWeight: "bold", textShadow: "-2px 0 #000, 0 2px #000, 2px 0 #000, 0 -2px #000", marginBottom: "28px", textAlign: "center"
-  // },
-  // notiFont: {
-  //   fontWeight: "bold",
-  //   marginBottom: "13px"
-  // }
-}))
-
 const Home = () => {
-
-  const classes = useStyles();
 
   const moveInterview = () => Router.push('/interview')
 
   return (
-    <Box className={classes.root}>
-      <Paper style={{ backgroundColor: "#B2FA5C", padding: "50px 15%" }}>
+    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh'}}>
+      <Paper style={{ backgroundColor: "#BCFF66", padding: "50px 15%", minWidth: "700px" }}>
         <Typography
           variant='h2'
           style={{ color: "white", fontWeight: "bold", textShadow: "-2px 0 #000, 0 2px #000, 2px 0 #000, 0 -2px #000", marginBottom: "28px", textAlign: "center" }}
