@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { aistudios } from '../types/aistudios';
 
 // Generate Client Token
 export const generateClientToken = async () => {
@@ -33,4 +34,17 @@ export const generateToken = async (token: string) => {
 
     return res.data;
 
+}
+
+// Get Model List
+export const getModelList = async (param: aistudios) => {
+
+    const res = await axios.post('/api/odin/getModelList', param
+      ).catch(function (error) {
+        if (error.response) {
+            return error.response;
+        }
+    });
+
+    return res.data;
 }

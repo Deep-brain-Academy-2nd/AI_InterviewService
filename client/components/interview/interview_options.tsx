@@ -1,16 +1,85 @@
 import { useState } from 'react';
-import { Box, FormControl, FormLabel, Radio, RadioGroup, FormControlLabel, TextField, Typography, Button, Grid } from '@material-ui/core'
+import {
+    Box, TextField, Typography, Button, Grid,
+    Stepper, Step, StepLabel,
+    ImageList, ImageListItem, ImageListItemBar
+} from '@material-ui/core'
 import { interview } from "../../types/interview"
+import { getModelList } from "../../services/aistudios-service";
 
 const Interview_options = (props) => {
+
+    // Current Stop
+    const [stepNum, setStepNum] = useState<number>(0)
+
+    // Model List
+    const [modelList, setModelList] = useState([])
+
+    const stepLabel = [
+        '질문',
+        '면접관',
+        '복장'
+    ];
 
     // Options State
     const [selectedOptions, setSelectedOptions] = useState<interview>({
         lang: "",
         text: "",
-        image: "",
+        model: "",
+        clothes: "",
         time: 0
     })
+
+    // Selected Model
+    const [selectedModel, setSelectedModel] = useState<any>({})
+
+    // Step Number handler
+    const stepNext = () => {
+
+        // Step 0 - 면접 질문, 답변시간 입력, 면접관 리스트 호출
+        if (stepNum === 0) {
+            
+            // Validation
+            if (selectedOptions.text === "" || selectedOptions.time === 0) {
+                alert ("면접 질문과 시간을 입력해주세요!")
+            } else {
+                const getML = async () => {
+                    const modelList = await getModelList(props.aistudios)
+                    setModelList(modelList?.models)
+                }
+    
+                getML();
+
+                setStepNum(stepNum + 1)
+            }
+        }
+
+        // Step 1 - 면접관 선택
+        else if (stepNum === 1) {
+
+            // Validation
+            if (!selectedModel?.id) {
+                alert ("면접관을 선택해주세요!")
+            } else {
+                setSelectedOptions(prev => {
+                    return {
+                        ...prev,
+                        model: selectedModel?.id,
+                        lang: selectedModel?.language[0]
+                    };
+                });
+
+                setStepNum(stepNum + 1)
+            }
+        }
+    }
+    const stepGoBack = () => {
+        
+        if (stepNum > 0) {
+            setSelectedModel({})
+            setStepNum(stepNum - 1)
+        }
+    }
 
     // Options change handler
     const handleChange = (event) => {
@@ -27,82 +96,153 @@ const Interview_options = (props) => {
 
     // Options save handler
     const handleSubmit = () => {
-        if (props.interviewList.length > 5) {
-            alert("최대 다섯개까지 등록 가능합니다.")
+        // if (props.interviewList.length > 5) {
+        //     alert("최대 다섯개까지 등록 가능합니다.")
+        // } else {
+        //     props.setInterviewList([...props.interviewList, selectedOptions])
+        // }
+
+        // Validation
+        if (selectedOptions.clothes === "") {
+            alert("복장을 선택해주세요.")
         } else {
-            props.setInterviewList([...props.interviewList, selectedOptions])
+            console.log(selectedOptions)
         }
     }
 
-    return (
-        <Box sx={{ height: "500px", borderRight: "1px solid #bdbdbd" }}>
+    // interview start handler
+    const handleStart = () => {
 
-            <Grid container>
-                <Grid item md={12}>
-                    {/* 언어 선택 */}
-                    <FormControl style={{ marginBottom: "20px" }}>
-                        <FormLabel id="lang-radio-buttons-group-label">언어</FormLabel>
-                        <RadioGroup
-                            row
-                            aria-labelledby="lang-radio-buttons-group-label"
-                            defaultValue="ko"
-                            name="lang"
-                            value={selectedOptions.lang}
+    }
+
+    return (
+        <Box sx={{ minHeight: "500px", borderRight: "1px solid #bdbdbd" }}>
+
+            <Stepper activeStep={stepNum} alternativeLabel style={{ backgroundColor: "#BCFF66" }}>
+                {stepLabel.map((label) => (
+                    <Step key={label}>
+                        <StepLabel>{label}</StepLabel>
+                    </Step>
+                ))}
+            </Stepper>
+
+            {/* Step 0 */}
+            {
+                stepNum === 0 &&
+                <Grid container justifyContent='center'>
+                    <Grid item md={8}>
+                        {/* 텍스트 입력 */}
+                        <Typography style={{ color: "rgba(0, 0, 0, 0.54)", marginBottom: "5px" }}>면접 질문</Typography>
+                        <TextField
+                            id="text"
+                            name="text"
+                            label="멘트"
+                            variant="outlined"
+                            value={selectedOptions.text}
                             onChange={handleChange}
-                        >
-                            <FormControlLabel value="ko" control={<Radio />} label="한국어" />
-                            <FormControlLabel value="en" control={<Radio />} label="English" />
-                            <FormControlLabel value="jp" control={<Radio />} label="日本語" />
-                        </RadioGroup>
-                    </FormControl>
+                            style={{ marginBottom: "20px", paddingRight: "30px", width: "500px" }}
+                        />
+                    </Grid>
+                    <Grid item md={8}>
+                        {/* 면접 대답 시간 입력 */}
+                        <Typography style={{ color: "rgba(0, 0, 0, 0.54)", marginBottom: "5px" }}>예상 답변 시간(분)</Typography>
+                        <TextField
+                            id="time"
+                            name="time"
+                            variant="outlined"
+                            value={selectedOptions.time}
+                            onChange={handleChange}
+                            style={{ marginBottom: "20px", paddingRight: "30px", width: "500px" }}
+                        />
+                    </Grid>
                 </Grid>
-                <Grid item md={12}>
-                    {/* 텍스트 입력 */}
-                    <Typography style={{ color: "rgba(0, 0, 0, 0.54)", marginBottom: "5px" }}>면접 질문</Typography>
-                    <TextField
-                        id="text"
-                        name="text"
-                        label="멘트"
-                        variant="outlined"
-                        value={selectedOptions.text}
-                        onChange={handleChange}
-                        style={{ marginBottom: "20px", paddingRight: "30px", width: "500px" }}
-                    />
-                </Grid>
-                <Grid item md={12}>
-                    {/* 이미지 (복장) 선택 */}
-                </Grid>
-                <Grid item md={12}>
-                    {/* 면접 대답 시간 입력 */}
-                    <Typography style={{ color: "rgba(0, 0, 0, 0.54)", marginBottom: "5px" }}>예상 답변 시간(분)</Typography>
-                    <TextField
-                        id="time"
-                        name="time"
-                        variant="outlined"
-                        value={selectedOptions.time}
-                        onChange={handleChange}
-                        style={{ marginBottom: "20px", paddingRight: "30px", width: "500px" }}
-                    />
-                </Grid>
-                <Grid item md={12}>
+            }
+
+            {/* Step 1 */}
+            {
+                stepNum === 1 && modelList &&
+                <ImageList style={{ padding: "15px 20px" }}>
+                    {modelList.map((model) => (
+                        <ImageListItem key={model.id}>
+                            <img
+                                src={model.imgPath}
+                                alt={model.id}
+                                loading="lazy"
+                            />
+                            <ImageListItemBar
+                                title={model.label.ko}
+                                subtitle={<span>언어: {model?.language[0] === "ko" ? "한국어" : model?.language[0] === "en" ? "영어" : model?.language[0] === "jp" ? "일본어" : "중국어"}</span>}
+                                position="bottom"
+                                actionIcon={
+                                    <Button
+                                        variant="outlined"
+                                        style={{ 
+                                            marginRight: 5,
+                                            backgroundColor: selectedModel.id === model.id && "#BCFF66"
+                                        }}
+                                        onClick={() => setSelectedModel(model)}
+                                    >
+                                        선택
+                                    </Button>
+                                }
+                            />
+                        </ImageListItem>
+                    ))}
+                </ImageList>
+            }
+
+            {/* Step 2 */}
+            {
+                stepNum === 2 && selectedModel &&
+                <ImageList style={{ padding: "15px 20px" }}>
+                    {selectedModel?.clothes.map((item) => (
+                        <ImageListItem key={item.id}>
+                            <img
+                                src={item.imgPath}
+                                alt={item.id}
+                                loading="lazy"
+                            />
+                            <ImageListItemBar
+                                title={item.label.ko}
+                                position="bottom"
+                                actionIcon={
+                                    <Button
+                                        variant="outlined"
+                                        style={{ 
+                                            marginRight: 5,
+                                            backgroundColor: selectedOptions.clothes === item.id && "#BCFF66"
+                                        }}
+                                        onClick={() => setSelectedOptions({...selectedOptions, clothes: item.id})}
+                                    >
+                                        선택
+                                    </Button>
+                                }
+                            />
+                        </ImageListItem>
+                    ))}
+                </ImageList>
+
+            }
+            <Grid item md={12}>
+                <Box sx={{ display: "flex", justifyContent: "center" }}>
                     {/* 저장 */}
                     <Button
-                        onClick={handleSubmit}
+                        onClick={stepGoBack}
                         variant="outlined"
                         style={{ backgroundColor: "black", color: "#A8F552", fontSize: "2rem", fontWeight: "bold", padding: "0px 20px", marginTop: "40px" }}
                     >
-                        저장
+                        이전
                     </Button>
                     <Button
-                        onClick={handleSubmit}
+                        onClick={stepNum !== 2 ? stepNext : handleSubmit}
                         variant="outlined"
                         style={{ backgroundColor: "black", color: "#A8F552", fontSize: "2rem", fontWeight: "bold", padding: "0px 20px", marginTop: "40px", marginLeft: "10px" }}
                     >
-                        면접 시작
+                        {stepNum !== 2 ? "다음" : "저장"}
                     </Button>
-                </Grid>
+                </Box>
             </Grid>
-        </Box>
+        </Box >
     )
 }
 

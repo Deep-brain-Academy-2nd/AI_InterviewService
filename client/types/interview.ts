@@ -1,6 +1,7 @@
 export interface interview {
     lang: string;
     text: string;
-    image: string;
+    model: string;
+    clothes: string;
     time: number;
 }
