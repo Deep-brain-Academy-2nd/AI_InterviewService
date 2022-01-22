@@ -1,4 +1,4 @@
-export interface interview {
+export interface interviewType {
     lang: string;
     text: string;
     model: string;

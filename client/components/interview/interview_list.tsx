@@ -1,11 +1,16 @@
-import { Box, Typography, Card, CardContent, CardMedia, Grid } from '@material-ui/core'
+import { Box, Typography, Card, CardContent, Grid, Button } from '@material-ui/core'
 
 const Interview_list = (props) => {
 
+    // interview start handler
+    const handleStart = () => {
+
+    }
+
     return (
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Grid container justifyContent='center'>
-                <Typography>Interview List</Typography>
+        <Box sx={{ flexDirection: "column", display: "flex", alignItems: "center" }}>
+            <Grid container justifyContent='center' style={{ minHeight: "400px" }}>
+                <Typography variant="h5">Interview List</Typography>
                 {
                     // Interview List
 
@@ -15,10 +20,10 @@ const Interview_list = (props) => {
                                 <Box>
                                     <CardContent>
 
-                                        언어: <span style={{ fontWeight: "bold" }}>
+                                        {/* 언어: <span style={{ fontWeight: "bold" }}>
                                             {item.lang === "ko" ? "한국어" : item.lang === "en" ? "English" : item.lang === "jp" && "日本語"}
                                         </span>
-                                        <br />
+                                        <br /> */}
                                         질문: <span style={{ fontWeight: "bold" }}>{item.text}</span>
                                         <br />
                                         답변 시간: <span style={{ fontWeight: "bold" }}>{item.time}분</span>
@@ -36,6 +41,20 @@ const Interview_list = (props) => {
                     ))
                 }
             </Grid>
+            {
+                props.interviewList?.length > 0 &&
+                <Button
+                    variant="outlined"
+                    onClick={handleStart}
+                    style={{
+                        backgroundColor: "black", color: "#A8F552", fontSize: "2rem", fontWeight: "bold", padding: "0px 20px", marginTop: "40px", maxWidth: "200px"
+                    }}
+                >
+                    면접시작
+                </Button>
+
+            }
+
         </Box>
     )
 

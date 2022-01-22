@@ -48,3 +48,29 @@ export const getModelList = async (param: aistudios) => {
 
     return res.data;
 }
+
+// Make Video
+export const makeVideo = async (param) => {
+
+    const res = await axios.post('/api/odin/makeVideo', param
+      ).catch(function (error) {
+        if (error.response) {
+            return error.response;
+        }
+    });
+
+    return res.data;
+}
+
+// Make Video
+export const findProject = async (param) => {
+
+    const res = await axios.post('/api/odin/findProject', param
+      ).catch(function (error) {
+        if (error.response) {
+            return error.response;
+        }
+    });
+
+    return res.data;
+}

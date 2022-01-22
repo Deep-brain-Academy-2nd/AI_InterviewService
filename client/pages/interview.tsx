@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Box, Paper, Grid } from '@material-ui/core'
+import { Box, Paper, Grid, Button } from '@material-ui/core'
 import Interview_options from '../components/interview/interview_options';
 import Interview_list from '../components/interview/interview_list';
+import Interview_modal from '../components/interview/interview_modal';
 import { generateClientToken, generateToken } from "../services/aistudios-service";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/reducers';
 import { setAIStudiosToken } from '../store/actions/aistudios';
 import { setTokenInfo } from '../store/actions/tokenInfo';
+import { interviewType } from "../types/interview"
 
 const interview = () => {
 
@@ -14,8 +16,41 @@ const interview = () => {
     const [interviewList, setInterviewList] = useState([])
     const aistudios = useSelector((state: RootState) => state.aiStudios);
 
+    // Current Stop
+    const [stepNum, setStepNum] = useState<number>(0)
+
+    // Show Dialog State
+    const [open, setOpen] = useState(false);
+
+    // Options State
+    const [selectedOptions, setSelectedOptions] = useState<interviewType>({
+        lang: "",
+        text: "",
+        model: "",
+        clothes: "",
+        time: null
+    })
+
+    // Open Dialog
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    // Close Dialog
+    const handleClose = () => {
+        // 선택된 옵션 초기화
+        setSelectedOptions({
+            lang: "",
+            text: "",
+            model: "",
+            clothes: "",
+            time: null
+        })
+        setOpen(false);
+        setStepNum(0);
+    };
+
     useEffect(() => {
-        
+
         // 토큰 생성, State에 저장
         const generateCT = async () => {
             const clientToken = await generateClientToken()
@@ -25,30 +60,46 @@ const interview = () => {
         }
 
         generateCT();
-   
+
     }, [])
 
     return (
-        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh'}}>
-          <Paper style={{ backgroundColor: "#BCFF66", padding: "50px 0px", width: "1200px", minHeight: "600px" }}>
-            <Grid container>
-                <Grid item md={7}>
-                    <Interview_options
-                        interviewList={interviewList}
-                        setInterviewList={setInterviewList}
-                        aistudios={aistudios}
-                    />
-                </Grid>
-                <Grid item md={5}>
-                    <Interview_list 
-                        interviewList={interviewList}
-                    />
-                </Grid>
-            </Grid>
-          </Paper>
-        </Box>
-      )
-        
+        <>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh' }}>
+                <Paper style={{ backgroundColor: "#BCFF66", padding: "50px 0px", width: "1200px", minHeight: "600px" }}>
+                    <Grid container>
+                        <Grid item md={7}>
+                            <Interview_options
+                                interviewList={interviewList}
+                                setInterviewList={setInterviewList}
+                                aistudios={aistudios}
+                                handleClickOpen={handleClickOpen}
+                                selectedOptions={selectedOptions}
+                                setSelectedOptions={setSelectedOptions}
+                                stepNum={stepNum}
+                                setStepNum={setStepNum}
+                            />
+                        </Grid>
+                        <Grid item md={5}>
+                            <Interview_list
+                                interviewList={interviewList}
+                            />
+                        </Grid>
+                    </Grid>
+                </Paper>
+            </Box>
+
+            <Interview_modal
+                open={open}
+                handleClose={handleClose}
+                selectedOptions={selectedOptions}
+                setSelectedOptions={setSelectedOptions}
+                interviewList={interviewList}
+                setInterviewList={setInterviewList}
+            />
+        </>
+    )
+
 }
 
 export default interview;

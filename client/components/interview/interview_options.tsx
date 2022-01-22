@@ -4,13 +4,9 @@ import {
     Stepper, Step, StepLabel,
     ImageList, ImageListItem, ImageListItemBar
 } from '@material-ui/core'
-import { interview } from "../../types/interview"
 import { getModelList } from "../../services/aistudios-service";
 
 const Interview_options = (props) => {
-
-    // Current Stop
-    const [stepNum, setStepNum] = useState<number>(0)
 
     // Model List
     const [modelList, setModelList] = useState([])
@@ -21,15 +17,6 @@ const Interview_options = (props) => {
         '복장'
     ];
 
-    // Options State
-    const [selectedOptions, setSelectedOptions] = useState<interview>({
-        lang: "",
-        text: "",
-        model: "",
-        clothes: "",
-        time: 0
-    })
-
     // Selected Model
     const [selectedModel, setSelectedModel] = useState<any>({})
 
@@ -37,10 +24,10 @@ const Interview_options = (props) => {
     const stepNext = () => {
 
         // Step 0 - 면접 질문, 답변시간 입력, 면접관 리스트 호출
-        if (stepNum === 0) {
+        if (props.stepNum === 0) {
             
             // Validation
-            if (selectedOptions.text === "" || selectedOptions.time === 0) {
+            if (props.selectedOptions.text === "" || props.selectedOptions.time === 0) {
                 alert ("면접 질문과 시간을 입력해주세요!")
             } else {
                 const getML = async () => {
@@ -50,18 +37,18 @@ const Interview_options = (props) => {
     
                 getML();
 
-                setStepNum(stepNum + 1)
+                props.setStepNum(props.stepNum + 1)
             }
         }
 
         // Step 1 - 면접관 선택
-        else if (stepNum === 1) {
+        else if (props.stepNum === 1) {
 
             // Validation
             if (!selectedModel?.id) {
                 alert ("면접관을 선택해주세요!")
             } else {
-                setSelectedOptions(prev => {
+                props.setSelectedOptions(prev => {
                     return {
                         ...prev,
                         model: selectedModel?.id,
@@ -69,15 +56,15 @@ const Interview_options = (props) => {
                     };
                 });
 
-                setStepNum(stepNum + 1)
+                props.setStepNum(props.stepNum + 1)
             }
         }
     }
     const stepGoBack = () => {
         
-        if (stepNum > 0) {
+        if (props.stepNum > 0) {
             setSelectedModel({})
-            setStepNum(stepNum - 1)
+            props.setStepNum(props.stepNum - 1)
         }
     }
 
@@ -86,7 +73,7 @@ const Interview_options = (props) => {
         let name = event.target.name;
         let value = event.target.value;
 
-        setSelectedOptions(prev => {
+        props.setSelectedOptions(prev => {
             return {
                 ...prev,
                 [name]: value
@@ -103,22 +90,17 @@ const Interview_options = (props) => {
         // }
 
         // Validation
-        if (selectedOptions.clothes === "") {
+        if (props.selectedOptions.clothes === "") {
             alert("복장을 선택해주세요.")
         } else {
-            console.log(selectedOptions)
+            props.handleClickOpen(true);
         }
-    }
-
-    // interview start handler
-    const handleStart = () => {
-
     }
 
     return (
         <Box sx={{ minHeight: "500px", borderRight: "1px solid #bdbdbd" }}>
 
-            <Stepper activeStep={stepNum} alternativeLabel style={{ backgroundColor: "#BCFF66" }}>
+            <Stepper activeStep={props.stepNum} alternativeLabel style={{ backgroundColor: "#BCFF66" }}>
                 {stepLabel.map((label) => (
                     <Step key={label}>
                         <StepLabel>{label}</StepLabel>
@@ -128,7 +110,7 @@ const Interview_options = (props) => {
 
             {/* Step 0 */}
             {
-                stepNum === 0 &&
+                props.stepNum === 0 &&
                 <Grid container justifyContent='center'>
                     <Grid item md={8}>
                         {/* 텍스트 입력 */}
@@ -138,7 +120,7 @@ const Interview_options = (props) => {
                             name="text"
                             label="멘트"
                             variant="outlined"
-                            value={selectedOptions.text}
+                            value={props.selectedOptions.text}
                             onChange={handleChange}
                             style={{ marginBottom: "20px", paddingRight: "30px", width: "500px" }}
                         />
@@ -150,7 +132,7 @@ const Interview_options = (props) => {
                             id="time"
                             name="time"
                             variant="outlined"
-                            value={selectedOptions.time}
+                            value={props.selectedOptions.time}
                             onChange={handleChange}
                             style={{ marginBottom: "20px", paddingRight: "30px", width: "500px" }}
                         />
@@ -160,7 +142,7 @@ const Interview_options = (props) => {
 
             {/* Step 1 */}
             {
-                stepNum === 1 && modelList &&
+                props.stepNum === 1 && modelList &&
                 <ImageList style={{ padding: "15px 20px" }}>
                     {modelList.map((model) => (
                         <ImageListItem key={model.id}>
@@ -193,7 +175,7 @@ const Interview_options = (props) => {
 
             {/* Step 2 */}
             {
-                stepNum === 2 && selectedModel &&
+                props.stepNum === 2 && selectedModel &&
                 <ImageList style={{ padding: "15px 20px" }}>
                     {selectedModel?.clothes.map((item) => (
                         <ImageListItem key={item.id}>
@@ -210,9 +192,9 @@ const Interview_options = (props) => {
                                         variant="outlined"
                                         style={{ 
                                             marginRight: 5,
-                                            backgroundColor: selectedOptions.clothes === item.id && "#BCFF66"
+                                            backgroundColor: props.selectedOptions.clothes === item.id && "#BCFF66"
                                         }}
-                                        onClick={() => setSelectedOptions({...selectedOptions, clothes: item.id})}
+                                        onClick={() => props.setSelectedOptions({...props.selectedOptions, clothes: item.id})}
                                     >
                                         선택
                                     </Button>
@@ -234,11 +216,11 @@ const Interview_options = (props) => {
                         이전
                     </Button>
                     <Button
-                        onClick={stepNum !== 2 ? stepNext : handleSubmit}
+                        onClick={props.stepNum !== 2 ? stepNext : handleSubmit}
                         variant="outlined"
                         style={{ backgroundColor: "black", color: "#A8F552", fontSize: "2rem", fontWeight: "bold", padding: "0px 20px", marginTop: "40px", marginLeft: "10px" }}
                     >
-                        {stepNum !== 2 ? "다음" : "저장"}
+                        {props.stepNum !== 2 ? "다음" : "저장"}
                     </Button>
                 </Box>
             </Grid>
