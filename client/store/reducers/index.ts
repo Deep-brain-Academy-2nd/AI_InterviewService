@@ -1,8 +1,12 @@
 import { combineReducers } from "redux";
 import user from "./user";
+import aiStudios from "./aistudios";
+import tokenInfo from "./tokenInfo";
 
 const rootReducer = combineReducers({
-    user
+    user,
+    aiStudios,
+    tokenInfo
 })
 
 export default rootReducer

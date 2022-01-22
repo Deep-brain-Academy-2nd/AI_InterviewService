@@ -1,7 +1,4 @@
-export interface User {
-    username: string;
-}
-export interface AIStudios {
+export interface aistudios {
     appId: string;
     platform: string;
     isClientToken: boolean;
@@ -9,8 +6,4 @@ export interface AIStudios {
     uuid: string;
     clientHostname: string;
     sdk_v: string;
-}
-export interface tokenInfo {
-    token: string;
-    tokenExpire: string;
 }

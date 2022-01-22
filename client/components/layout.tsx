@@ -48,16 +48,16 @@ const Layout = ({ children }: Props) => {
                     <Grid item md={2}>
                         <Link href="/"><Typography style={{ cursor: "pointer", fontSize: "20px" }}>AI-INTERVIEW</Typography></Link>
                     </Grid>
-                    <Grid item md={2}>
+                    <Grid item md={4}>
                         {
                             // 로그인전 버튼 - 회원가입, 로그인
                             // 로그인후 버튼 - 마이페이지, 로그아웃
                             username !== "" ?
                                 <Grid container justifyContent='flex-end' alignItems='center' spacing={2}>
-                                    <Grid item md={2}>
-                                        <Typography>{username}</Typography>
+                                    <Grid item md={4}>
+                                        <Typography>{username}님, 반갑습니다!</Typography>
                                     </Grid>
-                                    <Grid item md={10}>
+                                    <Grid item md={5}>
                                         <ButtonGroup>
                                             <Button onClick={logout}>Sign Out</Button>
                                             <Button >My Page</Button>
@@ -66,10 +66,10 @@ const Layout = ({ children }: Props) => {
                                 </Grid>
                                 :
                                 <Grid container justifyContent='flex-end' alignItems='center' spacing={2}>
-                                    <Grid item md={2}>
+                                    <Grid item md={4}>
                                         {/* Empty space */}
                                     </Grid>
-                                    <Grid item md={10}>
+                                    <Grid item md={5}>
                                         <ButtonGroup>
                                             <Button onClick={moveSignin}>Sign In</Button>
                                             <Button onClick={moveSignUp}>Sign Up</Button>
