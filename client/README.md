@@ -13,4 +13,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 --------------------------
 
 **Stack**
-Frontend - Next, Typescript, Styled-component- redux
+
+Frontend - **Next, Typescript, material-ui, redux**
