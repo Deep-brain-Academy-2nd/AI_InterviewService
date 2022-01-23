@@ -3,6 +3,7 @@ import { Box, Paper, Grid, Button } from '@material-ui/core'
 import Interview_options from '../components/interview/interview_options';
 import Interview_list from '../components/interview/interview_list';
 import Interview_modal from '../components/interview/interview_modal';
+import Interview_play from '../components/interview/interview_play';
 import { generateClientToken, generateToken } from "../services/aistudios-service";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/reducers';
@@ -16,12 +17,6 @@ const interview = () => {
     const [interviewList, setInterviewList] = useState([])
     const aistudios = useSelector((state: RootState) => state.aiStudios);
 
-    // Current Stop
-    const [stepNum, setStepNum] = useState<number>(0)
-
-    // Show Dialog State
-    const [open, setOpen] = useState(false);
-
     // Options State
     const [selectedOptions, setSelectedOptions] = useState<interviewType>({
         lang: "",
@@ -30,6 +25,12 @@ const interview = () => {
         clothes: "",
         time: null
     })
+
+    // Current Stop
+    const [stepNum, setStepNum] = useState<number>(0)
+
+    // Show Dialog State
+    const [open, setOpen] = useState(false);
 
     // Open Dialog
     const handleClickOpen = () => {
@@ -46,8 +47,19 @@ const interview = () => {
             time: null
         })
         setOpen(false);
+        setLoading(true);
         setStepNum(0);
     };
+
+    const [startInterview, setStartInterview] = useState<boolean>(false);
+
+    // Loading Circular Progress
+    const [loading, setLoading] = useState<boolean>(true);
+
+    // interview start handler
+    const handleStart = () => {
+        setStartInterview(true)
+    }
 
     useEffect(() => {
 
@@ -67,25 +79,34 @@ const interview = () => {
         <>
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh' }}>
                 <Paper style={{ backgroundColor: "#BCFF66", padding: "50px 0px", width: "1200px", minHeight: "600px" }}>
-                    <Grid container>
-                        <Grid item md={7}>
-                            <Interview_options
-                                interviewList={interviewList}
-                                setInterviewList={setInterviewList}
-                                aistudios={aistudios}
-                                handleClickOpen={handleClickOpen}
-                                selectedOptions={selectedOptions}
-                                setSelectedOptions={setSelectedOptions}
-                                stepNum={stepNum}
-                                setStepNum={setStepNum}
-                            />
-                        </Grid>
-                        <Grid item md={5}>
-                            <Interview_list
+                    {
+                        startInterview ?
+                            <Interview_play
                                 interviewList={interviewList}
                             />
-                        </Grid>
-                    </Grid>
+                            :
+                            <Grid container>
+                                <Grid item md={7}>
+                                    <Interview_options
+                                        interviewList={interviewList}
+                                        setInterviewList={setInterviewList}
+                                        aistudios={aistudios}
+                                        handleClickOpen={handleClickOpen}
+                                        selectedOptions={selectedOptions}
+                                        setSelectedOptions={setSelectedOptions}
+                                        stepNum={stepNum}
+                                        setStepNum={setStepNum}
+                                    />
+                                </Grid>
+                                <Grid item md={5}>
+                                    <Interview_list
+                                        interviewList={interviewList}
+                                        handleStart={handleStart}
+                                    />
+                                </Grid>
+                            </Grid>
+                    }
+
                 </Paper>
             </Box>
 
@@ -96,6 +117,8 @@ const interview = () => {
                 setSelectedOptions={setSelectedOptions}
                 interviewList={interviewList}
                 setInterviewList={setInterviewList}
+                loading={loading}
+                setLoading={setLoading}
             />
         </>
     )

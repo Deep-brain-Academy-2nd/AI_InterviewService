@@ -8,9 +8,6 @@ const Interview_modal = (props) => {
 
     const aistudios = useSelector((state: RootState) => state.aiStudios);
 
-    // Loading Circular Progress
-    const [loading, setLoading] = useState<boolean>(true);
-
     useEffect(() => {
 
         // 영상 생성
@@ -26,7 +23,7 @@ const Interview_modal = (props) => {
                             progress();
                         }, 1000)
                     } else {
-                        setLoading(false);
+                        props.setLoading(false);
                         // 생성된 영상링크 면접 리스트에 저장
                         props.setInterviewList([...props.interviewList, {video: status.data.video, text: props.selectedOptions.text, time: props.selectedOptions.time}])
                     }
@@ -45,13 +42,13 @@ const Interview_modal = (props) => {
             <DialogTitle>Subscribe</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    {loading ? "영상을 생성중입니다." : "영상 생성이 완료되었습니다."}
+                    {props.loading ? "영상을 생성중입니다." : "영상 생성이 완료되었습니다."}
                 </DialogContentText>
 
             </DialogContent>
             <DialogActions style={{ display: "flex", justifyContent: "center" }}>
                 {
-                    loading ?
+                    props.loading ?
                         <CircularProgress />
                         :
                         <>

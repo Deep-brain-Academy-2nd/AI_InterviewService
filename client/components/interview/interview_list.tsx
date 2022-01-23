@@ -2,11 +2,6 @@ import { Box, Typography, Card, CardContent, Grid, Button } from '@material-ui/c
 
 const Interview_list = (props) => {
 
-    // interview start handler
-    const handleStart = () => {
-
-    }
-
     return (
         <Box sx={{ flexDirection: "column", display: "flex", alignItems: "center" }}>
             <Grid container justifyContent='center' style={{ minHeight: "400px" }}>
@@ -15,7 +10,7 @@ const Interview_list = (props) => {
                     // Interview List
 
                     props.interviewList.map((item, index) => (
-                        <Grid item md={11} style={{ padding: "5px 0px 5px 20px" }}>
+                        <Grid item key={index} md={11} style={{ padding: "5px 0px 5px 20px" }}>
                             <Card>
                                 <Box>
                                     <CardContent>
@@ -45,7 +40,7 @@ const Interview_list = (props) => {
                 props.interviewList?.length > 0 &&
                 <Button
                     variant="outlined"
-                    onClick={handleStart}
+                    onClick={props.handleStart}
                     style={{
                         backgroundColor: "black", color: "#A8F552", fontSize: "2rem", fontWeight: "bold", padding: "0px 20px", marginTop: "40px", maxWidth: "200px"
                     }}
