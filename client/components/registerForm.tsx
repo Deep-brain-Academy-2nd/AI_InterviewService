@@ -1,20 +1,9 @@
-import { useState } from "react";
-import { TextField, Button, Grid } from "@material-ui/core";
-import { makeStyles } from '@material-ui/styles'
+import { TextField, Button, Grid } from "@mui/material";
 import { useFormik, FormikHelpers } from 'formik';
 import * as yup from 'yup';
 import Router from "next/router"
 import { User } from "../types/user";
 import { register } from '../services/user-service';
-
-const useStyles = makeStyles(theme => ({
-    gridItem: {
-        marginBottom: 15,
-        minWidth: 320,
-        display: "flex",
-        justifyContent: "center"
-    }
-}))
 
 // Setup Validation Info
 const validationSchema = yup.object({
@@ -36,8 +25,6 @@ const validationSchema = yup.object({
 });
 
 const RegisterForm = () => {
-
-    const classes = useStyles();
 
     // Form, Validation library - formik, yup
     const formik = useFormik({
@@ -75,7 +62,7 @@ const RegisterForm = () => {
         <form onSubmit={formik.handleSubmit}>
             <Grid container direction="column" justifyContent='space-between' alignItems='center'>
                 {/* ID */}
-                <Grid item md={12} className={classes.gridItem}>
+                <Grid item md={12} style={{marginBottom: 15, minWidth: 320, display: "flex", justifyContent: "center"}}>
                     <TextField
                         fullWidth
                         label="ID"
@@ -88,7 +75,7 @@ const RegisterForm = () => {
                     />
                 </Grid>
                 {/* ID */}
-                <Grid item md={12} className={classes.gridItem}>
+                <Grid item md={12} style={{marginBottom: 15, minWidth: 320, display: "flex", justifyContent: "center"}}>
                     <TextField
                         fullWidth
                         label="Name"
@@ -101,7 +88,7 @@ const RegisterForm = () => {
                     />
                 </Grid>
                 {/* Password */}
-                <Grid item md={12} className={classes.gridItem}>
+                <Grid item md={12} style={{marginBottom: 15, minWidth: 320, display: "flex", justifyContent: "center"}}>
                     <TextField
                         fullWidth
                         type="password"
@@ -115,7 +102,7 @@ const RegisterForm = () => {
                     />
                 </Grid>
                 {/* Password */}
-                <Grid item md={12} className={classes.gridItem}>
+                <Grid item md={12} style={{marginBottom: 15, minWidth: 320, display: "flex", justifyContent: "center"}}>
                     <TextField
                         fullWidth
                         type="password"
@@ -129,8 +116,8 @@ const RegisterForm = () => {
                     />
                 </Grid>
                 {/* Login Button */}
-                <Grid item md={12} className={classes.gridItem}>
-                    <Button color="primary" type="submit" variant="outlined">Sign Up</Button>
+                <Grid item md={12} style={{marginBottom: 15, minWidth: 320, display: "flex", justifyContent: "center"}}>
+                    <Button type="submit" variant="outlined" style={{ color: "#20c997", border: "1px solid #20c997"}}>Sign Up</Button>
                 </Grid>
             </Grid>
         </form>

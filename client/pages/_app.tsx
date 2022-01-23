@@ -1,11 +1,12 @@
 import "../styles/globals.css";
-//import { useEffect } from "react";
 import Head from 'next/head';
-import App, { AppProps, AppContext } from "next/app";
+import { AppProps } from "next/app";
 import Layout from "../components/layout";
 import { Provider } from "react-redux";
 import { compose, createStore, Store } from "redux";
 import rootReducer from "../store/reducers";
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from "../styles/theme";
 
 declare global {
   interface Window {
@@ -27,23 +28,17 @@ const store = configureStore()
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 
-  // useEffect(() => {
-  //   const jssStyles = document.querySelector('#jss-server-side'); 
-  //   if (jssStyles) { 
-  //     jssStyles.parentNode.removeChild(jssStyles); 
-  //   }
-
-  // }, [])
-
   return (
     <>
       <Head>
         <title>AI Interview Service</title>
       </Head>
       <Provider store={store}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <ThemeProvider theme={theme}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ThemeProvider>
       </Provider>
     </>
   )

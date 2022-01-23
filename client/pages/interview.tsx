@@ -78,7 +78,7 @@ const interview = () => {
     return (
         <>
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh' }}>
-                <Paper style={{ backgroundColor: "#BCFF66", padding: "50px 0px", width: "1200px", minHeight: "600px" }}>
+                <Paper style={{ backgroundColor: "white", padding: "50px 0px", width: "1200px", minHeight: "600px" }}>
                     {
                         startInterview ?
                             <Interview_play

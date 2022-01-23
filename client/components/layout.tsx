@@ -32,7 +32,7 @@ const Layout = ({ children }: Props) => {
 
     return (
         <Box>
-            <AppBar style={{padding: "0 20%", height: "100px", display: "flex", justifyContent: "center"}}>
+            <AppBar style={{padding: "0 20%", height: "100px", display: "flex", justifyContent: "center", backgroundColor: "#20c997"}}>
                 <Grid container justifyContent='space-between' alignItems='center'>
                     <Grid item md={2}>
                         <Link href="/"><Typography style={{ cursor: "pointer", fontSize: "20px" }}>AI-INTERVIEW</Typography></Link>

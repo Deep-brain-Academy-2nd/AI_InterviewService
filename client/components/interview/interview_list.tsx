@@ -5,7 +5,7 @@ const Interview_list = (props) => {
     return (
         <Box sx={{ flexDirection: "column", display: "flex", alignItems: "center" }}>
             <Grid container justifyContent='center' style={{ minHeight: "400px" }}>
-                <Typography variant="h5">Interview List</Typography>
+                <Typography variant="h5" style={{ color: "#495057", fontWeight: "bold", marginBottom: "13px" }}>인터뷰 리스트</Typography>
                 {
                     // Interview List
 
@@ -42,7 +42,7 @@ const Interview_list = (props) => {
                     variant="outlined"
                     onClick={props.handleStart}
                     style={{
-                        backgroundColor: "black", color: "#A8F552", fontSize: "2rem", fontWeight: "bold", padding: "0px 20px", marginTop: "40px", maxWidth: "200px"
+                        backgroundColor: "white", color: "#20c997", fontSize: "2rem", fontWeight: "bold", padding: "0px 20px", marginTop: "40px", maxWidth: "200px", border: "1px solid #20c997"
                     }}
                 >
                     면접시작

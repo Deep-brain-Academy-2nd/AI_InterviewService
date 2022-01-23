@@ -1,5 +1,4 @@
-import { TextField, Button, Grid } from "@material-ui/core";
-import { makeStyles } from '@material-ui/styles'
+import { TextField, Button, Grid } from "@mui/material";
 import { useFormik, FormikHelpers } from 'formik';
 import * as yup from 'yup';
 import Router from "next/router"
@@ -7,15 +6,6 @@ import { User } from "../types/user";
 import { login, getProfile } from '../services/user-service';
 import { useDispatch } from "react-redux";
 import { setUsername } from "../store/actions/user";
-
-const useStyles = makeStyles(theme => ({
-    gridItem: {
-        marginBottom: 15,
-        minWidth: 320,
-        display: "flex",
-        justifyContent: "center"
-    }
-}))
 
 // Setup Validation Info
 const validationSchema = yup.object({
@@ -30,8 +20,6 @@ const validationSchema = yup.object({
 });
 
 const LoginForm = () => {
-
-    const classes = useStyles();
 
     const dispatch = useDispatch();
 
@@ -75,7 +63,7 @@ const LoginForm = () => {
         <form onSubmit={formik.handleSubmit}>
             <Grid container direction="column" justifyContent='space-between' alignItems='center'>
                 {/* ID */}
-                <Grid item md={12} className={classes.gridItem}>
+                <Grid item md={12} style={{marginBottom: 15, minWidth: 320, display: "flex", justifyContent: "center"}}>
                     <TextField
                         fullWidth
                         label="ID"
@@ -88,7 +76,7 @@ const LoginForm = () => {
                     />
                 </Grid>
                 {/* Password */}
-                <Grid item md={12} className={classes.gridItem}>
+                <Grid item md={12} style={{marginBottom: 15, minWidth: 320, display: "flex", justifyContent: "center"}}>
                     <TextField
                         fullWidth
                         type="password"
@@ -102,8 +90,8 @@ const LoginForm = () => {
                     />
                 </Grid>
                 {/* Login Button */}
-                <Grid item md={12} className={classes.gridItem}>
-                    <Button color="primary" type="submit" variant="outlined">Login</Button>
+                <Grid item md={12} style={{marginBottom: 15, minWidth: 320, display: "flex", justifyContent: "center"}}>
+                    <Button type="submit" variant="outlined" style={{ color: "#20c997", border: "1px solid #20c997"}}>Login</Button>
                 </Grid>
             </Grid>
 

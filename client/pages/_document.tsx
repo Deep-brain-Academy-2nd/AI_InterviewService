@@ -36,7 +36,6 @@ export default class MyDocument extends Document<IProps> {
     return (
       <Html>
         <Head>
-          <title>AI Interview Service</title>
         </Head>
         <body>
           <Main />

@@ -27,7 +27,7 @@ const Interview_play = props => {
                 setPlayIndex(playIndex + 1);
                 setAnswerView(false);
             }
-        }, videoList[playIndex]?.time * 6000)
+        }, videoList[playIndex]?.time * 1000)
     }
 
     if (props.interviewList === null) return <p>Loading...</p>;

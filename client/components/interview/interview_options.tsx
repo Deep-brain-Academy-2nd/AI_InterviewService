@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import {
-    Box, TextField, Typography, Button, Grid,
-    Stepper, Step, StepLabel,
+    Box, Typography, Button, Grid,
     ImageList, ImageListItem, ImageListItemBar
 } from '@material-ui/core'
+import {TextField, Stepper, Step, StepLabel} from "@mui/material"
 import { getModelList } from "../../services/aistudios-service";
 
 const Interview_options = (props) => {
@@ -100,7 +100,7 @@ const Interview_options = (props) => {
     return (
         <Box sx={{ minHeight: "500px", borderRight: "1px solid #bdbdbd" }}>
 
-            <Stepper activeStep={props.stepNum} alternativeLabel style={{ backgroundColor: "#BCFF66" }}>
+            <Stepper activeStep={props.stepNum} alternativeLabel style={{ backgroundColor: "white", marginBottom: "35px" }}>
                 {stepLabel.map((label) => (
                     <Step key={label}>
                         <StepLabel>{label}</StepLabel>
@@ -114,7 +114,7 @@ const Interview_options = (props) => {
                 <Grid container justifyContent='center'>
                     <Grid item md={8}>
                         {/* 텍스트 입력 */}
-                        <Typography style={{ color: "rgba(0, 0, 0, 0.54)", marginBottom: "5px" }}>면접 질문</Typography>
+                        <Typography style={{ color: "rgba(0, 0, 0, 0.54)", marginBottom: "8px" }}>면접 질문</Typography>
                         <TextField
                             id="text"
                             name="text"
@@ -127,7 +127,7 @@ const Interview_options = (props) => {
                     </Grid>
                     <Grid item md={8}>
                         {/* 면접 대답 시간 입력 */}
-                        <Typography style={{ color: "rgba(0, 0, 0, 0.54)", marginBottom: "5px" }}>예상 답변 시간(분)</Typography>
+                        <Typography style={{ color: "rgba(0, 0, 0, 0.54)", marginBottom: "8px" }}>예상 답변 시간(초)</Typography>
                         <TextField
                             id="time"
                             name="time"
@@ -160,7 +160,7 @@ const Interview_options = (props) => {
                                         variant="outlined"
                                         style={{ 
                                             marginRight: 5,
-                                            backgroundColor: selectedModel.id === model.id && "#BCFF66"
+                                            backgroundColor: selectedModel.id === model.id && "#20c997"
                                         }}
                                         onClick={() => setSelectedModel(model)}
                                     >
@@ -192,7 +192,7 @@ const Interview_options = (props) => {
                                         variant="outlined"
                                         style={{ 
                                             marginRight: 5,
-                                            backgroundColor: props.selectedOptions.clothes === item.id && "#BCFF66"
+                                            backgroundColor: props.selectedOptions.clothes === item.id && "#20c997"
                                         }}
                                         onClick={() => props.setSelectedOptions({...props.selectedOptions, clothes: item.id})}
                                     >
@@ -211,14 +211,14 @@ const Interview_options = (props) => {
                     <Button
                         onClick={stepGoBack}
                         variant="outlined"
-                        style={{ backgroundColor: "black", color: "#A8F552", fontSize: "2rem", fontWeight: "bold", padding: "0px 20px", marginTop: "40px" }}
+                        style={{ backgroundColor: "white", color: "#20c997", fontSize: "2rem", fontWeight: "bold", padding: "0px 20px", marginTop: "40px", border: "1px solid #20c997" }}
                     >
                         이전
                     </Button>
                     <Button
                         onClick={props.stepNum !== 2 ? stepNext : handleSubmit}
                         variant="outlined"
-                        style={{ backgroundColor: "black", color: "#A8F552", fontSize: "2rem", fontWeight: "bold", padding: "0px 20px", marginTop: "40px", marginLeft: "10px" }}
+                        style={{ backgroundColor: "white", color: "#20c997", fontSize: "2rem", fontWeight: "bold", padding: "0px 20px", marginTop: "40px", marginLeft: "10px", border: "1px solid #20c997" }}
                     >
                         {props.stepNum !== 2 ? "다음" : "저장"}
                     </Button>

@@ -49,10 +49,10 @@ const Interview_modal = (props) => {
             <DialogActions style={{ display: "flex", justifyContent: "center" }}>
                 {
                     props.loading ?
-                        <CircularProgress />
+                        <CircularProgress style={{color: "#20c997"}}/>
                         :
                         <>
-                            <Button variant="outlined" onClick={props.handleClose}>확인</Button>
+                            <Button variant="outlined" onClick={props.handleClose} style={{backgroundColor: "white", color: "#20c997", border: "1px solid #20c997"}}>확인</Button>
                         </>
                 }
             </DialogActions>
