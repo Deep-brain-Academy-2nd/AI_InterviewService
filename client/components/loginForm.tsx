@@ -1,11 +1,12 @@
-import { useState } from "react";
 import { TextField, Button, Grid } from "@material-ui/core";
 import { makeStyles } from '@material-ui/styles'
 import { useFormik, FormikHelpers } from 'formik';
 import * as yup from 'yup';
 import Router from "next/router"
 import { User } from "../types/user";
-import { login } from '../services/user-service';
+import { login, getProfile } from '../services/user-service';
+import { useDispatch } from "react-redux";
+import { setUsername } from "../store/actions/user";
 
 const useStyles = makeStyles(theme => ({
     gridItem: {
@@ -32,6 +33,17 @@ const LoginForm = () => {
 
     const classes = useStyles();
 
+    const dispatch = useDispatch();
+
+    // Get Username
+    async function loadProfile() {
+        const result = await getProfile(); // Call API
+
+        if (result['name']) {
+            dispatch(setUsername(result['name']));
+        }
+    }
+
     // Form, Validation library - formik, yup
     const formik = useFormik({
         initialValues: {
@@ -46,10 +58,11 @@ const LoginForm = () => {
                 // Login
                 const result = await login(values.email, values.password);
                 if (result.type === 'success') {
+                    loadProfile(); // Load profile (username)
                     Router.push("/")
                 } else {
                     alert(result.message);
-			        values.email = "";
+                    values.email = "";
                     values.password = "";
                 }
 
@@ -60,7 +73,7 @@ const LoginForm = () => {
 
     return (
         <form onSubmit={formik.handleSubmit}>
-            <Grid container direction="column" justify='space-between' alignItems='center'>
+            <Grid container direction="column" justifyContent='space-between' alignItems='center'>
                 {/* ID */}
                 <Grid item md={12} className={classes.gridItem}>
                     <TextField

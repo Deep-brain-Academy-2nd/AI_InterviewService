@@ -73,7 +73,7 @@ const RegisterForm = () => {
 
     return (
         <form onSubmit={formik.handleSubmit}>
-            <Grid container direction="column" justify='space-between' alignItems='center'>
+            <Grid container direction="column" justifyContent='space-between' alignItems='center'>
                 {/* ID */}
                 <Grid item md={12} className={classes.gridItem}>
                     <TextField

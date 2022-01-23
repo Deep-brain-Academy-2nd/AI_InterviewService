@@ -120,7 +120,7 @@ const Interview_options = (props) => {
                             name="text"
                             label="멘트"
                             variant="outlined"
-                            value={props.selectedOptions.text}
+                            value={props.selectedOptions.text || ""}
                             onChange={handleChange}
                             style={{ marginBottom: "20px", paddingRight: "30px", width: "500px" }}
                         />
@@ -132,7 +132,7 @@ const Interview_options = (props) => {
                             id="time"
                             name="time"
                             variant="outlined"
-                            value={props.selectedOptions.time}
+                            value={props.selectedOptions.time || ""}
                             onChange={handleChange}
                             style={{ marginBottom: "20px", paddingRight: "30px", width: "500px" }}
                         />

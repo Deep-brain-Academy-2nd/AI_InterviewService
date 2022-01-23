@@ -1,9 +1,20 @@
 import { Box, Paper, Typography, Button, Grid } from '@material-ui/core'
 import Router from "next/router"
+import { useSelector } from "react-redux";
+import { RootState } from "../store/reducers";
 
 const Home = () => {
 
-  const moveInterview = () => Router.push('/interview')
+  const username = useSelector((state: RootState) => state.user.username);
+
+  const moveInterview = () => {
+    if (username === "") {
+      alert ("로그인 후 진행 가능합니다.")
+      Router.push('/login')
+    } else {
+      Router.push('/interview')
+    }
+  }
 
   return (
     <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh'}}>

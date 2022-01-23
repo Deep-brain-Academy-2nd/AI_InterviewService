@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 import { AppBar, Box, Typography, Button, Grid, ButtonGroup } from '@material-ui/core'
 import Router from "next/router"
 import Link from "next/link"
@@ -28,18 +28,7 @@ const Layout = ({ children }: Props) => {
         sessionStorage.removeItem("accessToken");
         dispatch(setUsername(""));
         Router.push('/');
-    }
-
-    // Get Username
-    async function loadProfile() {
-        const result = await getProfile(); // Call API
-
-        if (result['name']) {
-            dispatch(setUsername(result['name']));
-        }
-    }
-
-    loadProfile(); // Load profile (username) 
+    } 
 
     return (
         <Box>

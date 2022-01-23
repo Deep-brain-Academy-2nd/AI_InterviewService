@@ -39,7 +39,7 @@ const Interview_modal = (props) => {
 
     return (
         <Dialog open={props.open} onClose={props.handleClose}>
-            <DialogTitle>Subscribe</DialogTitle>
+            <DialogTitle>인터뷰 생성</DialogTitle>
             <DialogContent>
                 <DialogContentText>
                     {props.loading ? "영상을 생성중입니다." : "영상 생성이 완료되었습니다."}
