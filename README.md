@@ -1,6 +1,7 @@
 # AI_InterviewService
 
 Frontend
+
 Next.js, Material UI, Redux
 
 cd client
@@ -10,6 +11,7 @@ npm run dev
 -------------------
 
 Backend
+
 Node, Express, MongoDB
 
 cd server
