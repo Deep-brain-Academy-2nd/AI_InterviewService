@@ -23,3 +23,9 @@ create .env - mongo setup
 npm install
 
 npm start
+
+-------------------
+
+**Docker**
+
+docker-compose up -d --build
