@@ -1,0 +1,30 @@
+version: "3"
+services:
+
+  backend:
+    container_name: backend
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - dock_net
+
+  frontend:
+    depends_on:
+      - backend
+    container_name: frontend
+    links:
+      - backend
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - dock_net
+    
+networks:
+  dock_net:
+    driver: bridge
