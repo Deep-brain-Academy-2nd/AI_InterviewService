@@ -5,7 +5,9 @@
 Next.js, Material UI, Redux
 
 cd client
+
 npm install
+
 npm run dev
 
 -------------------
@@ -15,6 +17,9 @@ npm run dev
 Node, Express, MongoDB
 
 cd server
+
 create .env - mongo setup
+
 npm install
+
 npm start
