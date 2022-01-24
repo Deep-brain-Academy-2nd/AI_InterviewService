@@ -1,6 +1,6 @@
 # AI_InterviewService
 
-Frontend
+**Frontend**
 
 Next.js, Material UI, Redux
 
@@ -10,7 +10,7 @@ npm run dev
 
 -------------------
 
-Backend
+**Backend**
 
 Node, Express, MongoDB
 
