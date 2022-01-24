@@ -2,7 +2,7 @@
 
 **Frontend**
 
-Next.js, Material UI, Redux
+Stack: Next.js, Material UI, Redux
 
 cd client
 
@@ -14,7 +14,7 @@ npm run dev
 
 **Backend**
 
-Node, Express, MongoDB
+Stack: Node, Express, MongoDB
 
 cd server
 
