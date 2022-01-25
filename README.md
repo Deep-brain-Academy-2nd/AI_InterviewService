@@ -18,6 +18,8 @@ Stack: Node, Express, MongoDB
 
 cd server
 
+Set your mongo url at .env ---> MONGO_URL={YOUR URL}
+
 npm install
 
 npm start
