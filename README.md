@@ -18,8 +18,6 @@ Stack: Node, Express, MongoDB
 
 cd server
 
-create .env - mongo setup
-
 npm install
 
 npm start
